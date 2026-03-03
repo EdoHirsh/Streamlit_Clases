@@ -24,6 +24,26 @@ def Draw_Sucesion_1D(n , intervalo_x = [-0.05,1.05], intervalo_y = [-0.125,0.125
     ax.set_xlim(aux1-0.05*dif,aux2+0.05*dif)
     ax.set_ylim(*intervalo_y)
 
+    indices_suc= np.arange(1,n+1)
+    if solo_ultimo:
+        sucesion = func_f(n)
+    else:
+        sucesion = func_f(indices_suc)
+
+    #! iniciar figura
+    fig , ax = plt.subplots(figsize=(10,1))
+
+    aux1=min(intervalo_x[0], np.min(sucesion))
+    aux2=max(intervalo_x[1], np.max(sucesion))
+    dif = aux2-aux1
+    ax.set_xlim(aux1-0.05*dif,aux2+0.05*dif)
+    ax.set_ylim(*intervalo_y)
+
+    #* dibujar ejes coordenados
+    ax.spines[["bottom"]].set_position(("data", 0))
+    ax.spines[["left", "top", "right"]].set_visible(False)
+    ax.plot(1, 0, ">", transform=ax.get_yaxis_transform(), clip_on=False)
+
     #* Graficar la sucesión
     ax.scatter(sucesion,np.zeros_like(sucesion) , color='blue', s=30)
 
