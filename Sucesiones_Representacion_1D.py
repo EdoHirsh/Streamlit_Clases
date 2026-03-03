@@ -8,7 +8,7 @@ tam_fuentes=12
 def func_f(x: int):
   return ((-1)**x)*(1/x)
 
-def Draw_Sucesion_1D(n , intervalo_x = [-0.05,1.05], intervalo_y = [-0.125,0.125],solo_ultimo = False, Plot_dark = False, ocultar_etiquetas = False):
+def Draw_Sucesion_1D(n , intervalo_x = [-0.05,1.05], intervalo_y = [-0.125,0.125],solo_ultimo = False, ocultar_etiquetas = False):
   indices_suc= np.arange(1,n+1)
 
   #! iniciar figura
@@ -22,7 +22,7 @@ def Draw_Sucesion_1D(n , intervalo_x = [-0.05,1.05], intervalo_y = [-0.125,0.125
   #* dibujar ejes coordenados
   ax.spines[["bottom"]].set_position(("data", 0))
   ax.spines[["left", "top", "right"]].set_visible(False)
-  ax.plot(1, 0, ">", transform=ax.get_yaxis_transform(), clip_on=False, color = 'white' if Plot_dark else 'black')
+  ax.plot(1, 0, ">", transform=ax.get_yaxis_transform(), clip_on=False, color = 'black')
 
   # Graficar la función
   if solo_ultimo:
@@ -30,7 +30,7 @@ def Draw_Sucesion_1D(n , intervalo_x = [-0.05,1.05], intervalo_y = [-0.125,0.125
   else:
     sucesion = func_f(indices_suc)
 
-  ax.scatter(sucesion,np.zeros_like(sucesion) , color='cyan' if Plot_dark else 'blue', s=30)
+  ax.scatter(sucesion,np.zeros_like(sucesion) , color='blue', s=30)
 
   # etiquetas de los puntos
   if not ocultar_etiquetas:
@@ -52,37 +52,26 @@ def Draw_Sucesion_1D(n , intervalo_x = [-0.05,1.05], intervalo_y = [-0.125,0.125
 
 
 def main():
-  #! parametros para grafico
-  Plot_dark = False
-
-  # intervalos x e y
+  # intervalo x
   intervalo_x = [-1,1]
 
   # cantidad numero de elementos de la sucesion
   n=6
 
   #! Configuración de la página de Streamlit
-  st.set_page_config(page_title="Visualización 1D de una sucesión", layout="wide", initial_sidebar_state='expanded', page_icon=':material/line_axis:')#, menu_items={'Get Help': 'https://www.extremelycoolapp.com/help','Report a bug': "https://www.extremelycoolapp.com/bug",'About': "# This is a header. This is an *extremely* cool app!"})
+  st.set_page_config(page_title="Visualización 1D de una sucesión", layout="wide", initial_sidebar_state='expanded', page_icon=':material/line_axis:')
 
   #! Titulo
   st.title('Visualización 1D de una sucesión')
 
   #! Checkboxes para opciones de visualización
-  # n = st.sidebar.slider('indique el valor de $n$', 1, 100, 6, 1)
   n = st.sidebar.number_input('indique el valor de $n$', min_value=1, value=n, step=1)
-  # solo_ultimo = st.sidebar.checkbox('Mostrar solo el último término', value=False)
   ocultar_etiquetas = st.sidebar.toggle('Ocultar etiquetas sucesión', value=False)
   solo_ultimo = st.sidebar.toggle('Mostrar solo el término actual', value=False)
-  # Plot_dark = st.sidebar.checkbox('Tema oscuro en el gráfico', value=Plot_dark)
-  # Plot_dark = st.sidebar.toggle(label='Gráfico modo oscuro', value=True, key='toggle_dark_mode')
-  # if Plot_dark:
-  #   plt.style.use('dark_background')
-  # else:
-  #   plt.style.use('default')
 
   #! Generar gráfico con spinner
   with st.spinner('Generando gráfico...'):
-    fig = Draw_Sucesion_1D(n , intervalo_x, solo_ultimo=solo_ultimo, Plot_dark=Plot_dark, ocultar_etiquetas=ocultar_etiquetas)
+    fig = Draw_Sucesion_1D(n , intervalo_x, solo_ultimo=solo_ultimo, ocultar_etiquetas=ocultar_etiquetas)
   st.pyplot(fig)
   st.markdown(f'Grafico sucesión $a_n = \\dfrac{{(-1)^{{n}}}}{{n}}$')
 
