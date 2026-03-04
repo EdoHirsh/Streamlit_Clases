@@ -2,8 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit as st
 
-#! Ejecutar con: streamlit run Sucesiones_Representacion_2D.py
-
 tam_fuentes=12
 
 #* Etiqueta de las sucesiones en formato LaTeX para mostrar en el gráfico
@@ -86,7 +84,7 @@ def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numer
 
 def main():
     #* intervalos x e y
-    intervalo_x = [0,6]
+    intervalo_x = [0,10]
     intervalo_y = [0,2]
 
     #* cantidad numero de elementos de la sucesion
@@ -102,15 +100,15 @@ def main():
     n = st.sidebar.number_input('indique el valor de $n$', min_value=1, value=n, step=1)
     ocultar_etiquetas = st.sidebar.toggle('Ocultar etiquetas sucesión', value=False)
     ocultar_numeros = st.sidebar.toggle('Ocultar etiquetas eje $x$', value=False)
-    ocultar_funciones = st.sidebar.toggle('Ocultar funciones continuas', value=False)
+    ocultar_funciones = st.sidebar.toggle('Ocultar funciones continuas', value=True)
 
     #! Generar gráfico con spinner
     with st.spinner('Generando gráfico...'):
         fig = Draw_Sucesion_2D(n , intervalo_x, intervalo_y, ocultar_numeros=ocultar_numeros, ocultar_etiquetas=ocultar_etiquetas, ocultar_funciones=ocultar_funciones)
-    st.pyplot(fig)
-    st.markdown(f'{latex_tag_funcion_a}')
-    st.markdown(f'{latex_tag_funcion_b}')
-    st.markdown(f'{latex_tag_funcion_c}')
+        st.pyplot(fig)
+        st.markdown(f'{latex_tag_funcion_a}')
+        st.markdown(f'{latex_tag_funcion_b}')
+        st.markdown(f'{latex_tag_funcion_c}')
 
 if __name__ == "__main__":
     main()

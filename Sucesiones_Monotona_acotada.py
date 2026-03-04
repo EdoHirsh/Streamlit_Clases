@@ -4,24 +4,29 @@ import streamlit as st
 
 tam_fuentes=12
 
-#* función de la sucesión
-def func_a(x: float):
-    return ((np.cos(x))**2)/x
+#* Etiqueta de la sucesión en formato LaTeX para mostrar en el gráfico
+latex_tag_funcion=r'$a_n = 1-\dfrac{1}{n}$'
 
-def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numeros = False, ocultar_etiquetas = False, ocultar_funciones_continuas = False):
-    #* calcular valores de la sucesión
+#* Función que define la sucesión a representar
+def func_a(x: float):
+    return 1-1/x
+
+#* Función para dibujar la sucesión
+def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numeros = False, ocultar_etiquetas = False, ocultar_funciones = False, ocultar_cota = False):
     indices_suc= np.arange(1,n+1)
     sucesion = func_a(indices_suc)
     min_suc = np.min(sucesion)
     max_suc = np.max(sucesion)
 
-    #* iniciar figura
+    #! iniciar figura
     fig , ax = plt.subplots(figsize=(10,5))
+
     aux1_x=min(0,intervalo_x[0])
     aux2_x=max(5,max(intervalo_x[1],n))
     dif_x = aux2_x-aux1_x
     rango_x = (aux1_x-0.05*dif_x,aux2_x+0.05*dif_x)
     ax.set_xlim(rango_x)
+
     aux1_y=min(min_suc,intervalo_y[0])
     aux2_y=max(max_suc,intervalo_y[1])
     dif_y = aux2_y-aux1_y
@@ -31,16 +36,20 @@ def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numer
     #* dibujar ejes coordenados
     ax.spines[["left", "bottom"]].set_position(("data", 0))
     ax.spines[["top", "right"]].set_visible(False)
-    ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
-    ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
+    ax.plot(1, 0, ">", transform=ax.get_yaxis_transform(), clip_on=False, color = 'black')
+    ax.plot(0, 1, "^", transform=ax.get_xaxis_transform(), clip_on=False, color = 'black')
 
-    #* Graficar la sucesión
+    #* Graficar la función
     ax.scatter(indices_suc, sucesion, color='blue', s=10)
-    #* Graficar función continua
-    if not ocultar_funciones_continuas:
-        x_continuo = np.linspace(1, n, 100)
-        y_continuo = func_a(x_continuo)
-        ax.plot(x_continuo, y_continuo, color='blue', linestyle=':', label='Función continua')
+
+    #* Graficar la función continua
+    if not ocultar_funciones:
+        x_continuo = np.linspace(1, n, 1000)
+        ax.plot(x_continuo, func_a(x_continuo), color='blue', linestyle=':')
+
+    #* líneas horizontales para mostrar acotación
+    if not ocultar_cota:
+        ax.hlines(1,0,n+10, color='red', linestyle=':')
 
     #* etiquetas de los puntos
     if not ocultar_etiquetas:
@@ -63,29 +72,30 @@ def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numer
 
 def main():
     #* intervalos x e y
-    intervalo_x = [0,6]
-    intervalo_y = [0,0.5]
+    intervalo_x = [0,10]
+    intervalo_y = [0,1]
 
-    #* número de elementos de la sucesión
-    n=6
+    #* cantidad numero de elementos de la sucesion
+    n=500
 
     #! Configuración de la página de Streamlit
-    st.set_page_config(page_title="Visualización 2D de una sucesión", layout="wide", initial_sidebar_state='expanded', page_icon=':material/line_axis:')
+    st.set_page_config(page_title="Sucesión Monótona Acotada", layout="wide", initial_sidebar_state='expanded', page_icon=':material/line_axis:')
 
     #! Titulo
-    st.title('Visualización 2D de una sucesión')
+    st.title('Sucesión Monótona Acotada')
 
     #! Checkboxes para opciones de visualización
     n = st.sidebar.number_input('indique el valor de $n$', min_value=1, value=n, step=1)
     ocultar_etiquetas = st.sidebar.toggle('Ocultar etiquetas sucesión', value=False)
     ocultar_numeros = st.sidebar.toggle('Ocultar etiquetas eje $x$', value=False)
-    ocultar_funciones_continuas = st.sidebar.toggle('Ocultar función continua', value=True)
+    ocultar_funciones = st.sidebar.toggle('Ocultar funciones continuas', value=False)
+    ocultar_cota = st.sidebar.toggle('Ocultar cota', value=True)
 
     #! Generar gráfico con spinner
     with st.spinner('Generando gráfico...'):
-        fig = Draw_Sucesion_2D(n , intervalo_x, intervalo_y, ocultar_numeros=ocultar_numeros, ocultar_etiquetas=ocultar_etiquetas, ocultar_funciones_continuas=ocultar_funciones_continuas)
+        fig = Draw_Sucesion_2D(n , intervalo_x, intervalo_y, ocultar_numeros=ocultar_numeros, ocultar_etiquetas=ocultar_etiquetas, ocultar_funciones=ocultar_funciones, ocultar_cota=ocultar_cota)
         st.pyplot(fig)
-        st.markdown(r'Grafico sucesión $a_n = \dfrac{\cos^2(n)}{n}$')
+        st.markdown(f'Gráfico sucesión: {latex_tag_funcion}')
 
 if __name__ == "__main__":
     main()
