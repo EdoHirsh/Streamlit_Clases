@@ -76,7 +76,7 @@ def main():
     intervalo_y = [0,1]
 
     #* cantidad numero de elementos de la sucesion
-    n=500
+    n=10
 
     #! Configuración de la página de Streamlit
     st.set_page_config(page_title="Sucesión Monótona Acotada", layout="wide", initial_sidebar_state='expanded', page_icon=':material/line_axis:')
