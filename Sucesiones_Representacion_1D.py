@@ -4,35 +4,32 @@ import streamlit as st
 
 tam_fuentes=12
 
-@np.vectorize
-def func_f(x: int):
+def func_a(x: int):
     return ((-1)**x)*(1/x)
 
-def Draw_Sucesion_1D(n , intervalo_x = [-0.05,1.05], intervalo_y = [-0.125,0.125],solo_ultimo = False, ocultar_etiquetas = False):
+def Draw_Sucesion_1D(n , intervalo_x = [0,1], intervalo_y = [-1,1],solo_ultimo = False, ocultar_etiquetas = False):
+    #* calcular valores de la sucesión
     indices_suc= np.arange(1,n+1)
     if solo_ultimo:
-        sucesion = func_f(n)
+        sucesion = func_a(n)
     else:
-        sucesion = func_f(indices_suc)
+        sucesion = func_a(indices_suc)
 
     #* iniciar figura
     fig , ax = plt.subplots(figsize=(10,1))
-
     aux1=min(intervalo_x[0], np.min(sucesion))
     aux2=max(intervalo_x[1], np.max(sucesion))
     dif = aux2-aux1
     ax.set_xlim(aux1-0.05*dif,aux2+0.05*dif)
     ax.set_ylim(*intervalo_y)
-
     indices_suc= np.arange(1,n+1)
     if solo_ultimo:
-        sucesion = func_f(n)
+        sucesion = func_a(n)
     else:
-        sucesion = func_f(indices_suc)
+        sucesion = func_a(indices_suc)
 
-    #! iniciar figura
+    #* iniciar figura
     fig , ax = plt.subplots(figsize=(10,1))
-
     aux1=min(intervalo_x[0], np.min(sucesion))
     aux2=max(intervalo_x[1], np.max(sucesion))
     dif = aux2-aux1
