@@ -82,13 +82,10 @@ def main():
     solo_ultimo = st.sidebar.toggle('Mostrar solo el término actual', value=False)
 
     #! Generar gráfico con spinner
-    with st.status('Generando gráfico...'):
+    with st.spinner('Generando gráfico...'):
         fig = Draw_Sucesion_1D(n , intervalo_x, solo_ultimo=solo_ultimo, ocultar_etiquetas=ocultar_etiquetas)
-        st.write('desplegando gráfico...')
         st.pyplot(fig)
-        st.write('gráfico desplegado')
         st.markdown(f'Grafico sucesión $a_n = \\dfrac{{(-1)^{{n}}}}{{n}}$')
-        st.write('proceso finalizado')
 
 if __name__ == "__main__":
     main()
