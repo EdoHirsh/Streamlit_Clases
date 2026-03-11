@@ -46,7 +46,7 @@ def Draw_Sucesion_1D(n , intervalo_x = [-0.05,1.05], intervalo_y = [-0.125,0.125
             ax.text(sucesion, 0.025 , f'$s_{{{n}}}$', fontsize=tam_fuentes, ha='center', va='bottom')
         else:
             ax.plot([sucesion[-2],sucesion[-1]], [0.07, 0.07], color='blue')
-            ax.text((sucesion[-2]+sucesion[-1])/2, 0.075 , f'$a_{{{n}}}$', fontsize=tam_fuentes, ha='center', va='bottom')
+            ax.text((sucesion[-2]+sucesion[-1])/2, 0.075 , f'$b_{{{n}}}$', fontsize=tam_fuentes, ha='center', va='bottom')
             for i in range(n):
                 ax.text(sucesion[i], 0.025 , f'$s_{{{i+1}}}$', fontsize=tam_fuentes, ha='center', va='bottom')
 
