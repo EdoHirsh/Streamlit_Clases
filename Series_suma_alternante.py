@@ -81,7 +81,7 @@ def main():
     ocultar_etiquetas = st.sidebar.toggle('Ocultar etiquetas sucesión', value=False)
 
     Suma_total = sum_a(n)
-    latex_suma_total = rf'$\displaystyle s_{{{n}}}={Suma_total}, \quad a_{{{n}}}={func_a(n)}, \quad R_n = {Suma_total - np.log(2)}$'
+    latex_suma_total = rf'$\displaystyle s_{{{n}}}={Suma_total}, \quad b_{{{n}}}={func_a(n)}, \quad R_n = {Suma_total - np.log(2)}$'
     latex_suma_serie = r'$\displaystyle s_n=\sum_{k=1}^{\infty} \frac{(-1)^{k+1}}{k} = \ln(2) \approx 0,6931471806$'
     #! Generar gráfico con spinner
     with st.spinner('Generando gráfico...'):
