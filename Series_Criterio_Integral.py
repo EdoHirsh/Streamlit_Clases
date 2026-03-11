@@ -2,14 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit as st
 
-#! Ejecutar con: streamlit run Series_Criterio_Integral.py
-
-Tam_fuentes=16
-
 def func_f(x: float):
     return 1/x
 
-def Draw_Criterio(n ,N, PuntosSubintervalos, intervalo_x_vent = [-0.5,10.5], intervalo_y_vent = [-0.075,1.075], intervalo_x_graf = [0,10.5], SumaSuperior = True, SumaInferior = True, mostrar_funcion = True, Mostrar_integral = False):
+def Draw_Criterio(n ,N, PuntosSubintervalos, intervalo_x_vent = [-0.5,10.5], intervalo_y_vent = [-0.075,1.075], intervalo_x_graf = [0,10.5], SumaSuperior = True, SumaInferior = True, mostrar_funcion = True, Mostrar_integral = False, Tam_fuentes = 16):
     #! iniciar figura
     fig , ax = plt.subplots(figsize=(20,10))
     ax.set_xlim(*intervalo_x_vent)
@@ -58,6 +54,8 @@ def Draw_Criterio(n ,N, PuntosSubintervalos, intervalo_x_vent = [-0.5,10.5], int
 
 
 def main():
+    Tam_fuentes=16
+
     #* intervalos x e y
     intervalo_x_vent = [-0.5,10.5]
     intervalo_y_vent = [-0.075,1.075]
@@ -86,7 +84,7 @@ def main():
 
     #! Generar gráfico con spinner
     with st.spinner('Generando gráfico...'):
-        fig = Draw_Criterio(n ,N, PuntosSubintervalos, intervalo_x_vent, intervalo_y_vent,intervalo_x_graf, SumaSuperior, SumaInferior, mostrar_funcion, Mostrar_integral=Integral)
+        fig = Draw_Criterio(n ,N, PuntosSubintervalos, intervalo_x_vent, intervalo_y_vent,intervalo_x_graf, SumaSuperior, SumaInferior, mostrar_funcion, Mostrar_integral=Integral, Tam_fuentes=Tam_fuentes)
         st.pyplot(fig)
         st.markdown(r'$a_{n}=f(n)$')
 

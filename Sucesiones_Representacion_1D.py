@@ -2,12 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit as st
 
-tam_fuentes=12
-
+#* Función que define la sucesión a_n
 def func_a(x: int):
     return ((-1)**x)*(1/x)
 
-def Draw_Sucesion_1D(n , intervalo_x = [0,1], intervalo_y = [-1,1],solo_ultimo = False, ocultar_etiquetas = False):
+def Draw_Sucesion_1D(n , intervalo_x = [0,1], intervalo_y = [-1,1],solo_ultimo = False, ocultar_etiquetas = False, tam_fuentes = 12):
     #* calcular valores de la sucesión
     indices_suc= np.arange(1,n+1)
     if solo_ultimo:
@@ -39,7 +38,7 @@ def Draw_Sucesion_1D(n , intervalo_x = [0,1], intervalo_y = [-1,1],solo_ultimo =
     #* dibujar ejes coordenados
     ax.spines[["bottom"]].set_position(("data", 0))
     ax.spines[["left", "top", "right"]].set_visible(False)
-    ax.plot(1, 0, ">", transform=ax.get_yaxis_transform(), clip_on=False)
+    ax.plot(1, 0, ">", transform=ax.get_yaxis_transform(), clip_on=False, color='black')
 
     #* Graficar la sucesión
     ax.scatter(sucesion,np.zeros_like(sucesion) , color='blue', s=30)
@@ -64,6 +63,8 @@ def Draw_Sucesion_1D(n , intervalo_x = [0,1], intervalo_y = [-1,1],solo_ultimo =
 
 
 def main():
+    tam_fuentes=12
+
     #* intervalo x
     intervalo_x = [-1,1]
 
@@ -83,7 +84,7 @@ def main():
 
     #! Generar gráfico con spinner
     with st.spinner('Generando gráfico...'):
-        fig = Draw_Sucesion_1D(n , intervalo_x, solo_ultimo=solo_ultimo, ocultar_etiquetas=ocultar_etiquetas)
+        fig = Draw_Sucesion_1D(n , intervalo_x, solo_ultimo=solo_ultimo, ocultar_etiquetas=ocultar_etiquetas, tam_fuentes=tam_fuentes)
         st.pyplot(fig)
         st.markdown(f'Grafico sucesión $a_n = \\dfrac{{(-1)^{{n}}}}{{n}}$')
 

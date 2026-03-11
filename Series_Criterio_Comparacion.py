@@ -2,10 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit as st
 
-#! Ejecutar con: streamlit run Series_Criterio_comparacion.py
-
-tam_fuentes=12
-
 #* Etiquetas de las sucesiones en formato LaTeX para mostrar en el gráfico
 texto_sucesion_a = r'$a_n = \dfrac{(\cos(n))^2}{n^2}$'
 texto_sucesion_b = r'$b_n = \dfrac{1}{n^2}$'
@@ -32,7 +28,7 @@ def func_sum_b(x: float):
     suc = 1/(ind**2)
     return np.sum(suc)
 
-def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numeros = False, ocultar_etiquetas = False, ocultar_a = False, ocultar_b = False, ocultar_sumas = True, ocultar_funciones = True):
+def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numeros = False, ocultar_etiquetas = False, ocultar_a = False, ocultar_b = False, ocultar_sumas = True, ocultar_funciones = True, tam_fuentes = 12):
     indices_suc= np.arange(1,n+1)
     sucesion_f = func_a(indices_suc)
     suma_sucesion_f = func_sum_a(indices_suc)
@@ -111,6 +107,8 @@ def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numer
 
 
 def main():
+    tam_fuentes=12
+
     #* intervalos x e y
     intervalo_x = [0,6]
     intervalo_y = [0,1]
@@ -135,7 +133,7 @@ def main():
 
     #! Generar gráfico con spinner
     with st.spinner('Generando gráfico...'):
-        fig = Draw_Sucesion_2D(n , intervalo_x, intervalo_y, ocultar_numeros=ocultar_numeros, ocultar_etiquetas=ocultar_etiquetas, ocultar_a=ocultar_a, ocultar_b=ocultar_b, ocultar_sumas=ocultar_sumas, ocultar_funciones=ocultar_funciones)
+        fig = Draw_Sucesion_2D(n , intervalo_x, intervalo_y, ocultar_numeros=ocultar_numeros, ocultar_etiquetas=ocultar_etiquetas, ocultar_a=ocultar_a, ocultar_b=ocultar_b, ocultar_sumas=ocultar_sumas, ocultar_funciones=ocultar_funciones, tam_fuentes=tam_fuentes)
         st.pyplot(fig)
         if not ocultar_a:
             st.markdown(rf"{texto_sucesion_a}")

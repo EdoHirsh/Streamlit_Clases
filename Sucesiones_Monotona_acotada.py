@@ -2,8 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit as st
 
-tam_fuentes=12
-
 #* Etiqueta de la sucesión en formato LaTeX para mostrar en el gráfico
 latex_tag_funcion=r'$a_n = 1-\dfrac{1}{n}$'
 
@@ -12,7 +10,7 @@ def func_a(x: float):
     return 1-1/x
 
 #* Función para dibujar la sucesión
-def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numeros = False, ocultar_etiquetas = False, ocultar_funciones = False, ocultar_cota = False):
+def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numeros = False, ocultar_etiquetas = False, ocultar_funciones = False, ocultar_cota = False, tam_fuentes = 12):
     indices_suc= np.arange(1,n+1)
     sucesion = func_a(indices_suc)
     min_suc = np.min(sucesion)
@@ -71,6 +69,8 @@ def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numer
 
 
 def main():
+    tam_fuentes=12
+
     #* intervalos x e y
     intervalo_x = [0,10]
     intervalo_y = [0,1]
@@ -93,7 +93,7 @@ def main():
 
     #! Generar gráfico con spinner
     with st.spinner('Generando gráfico...'):
-        fig = Draw_Sucesion_2D(n , intervalo_x, intervalo_y, ocultar_numeros=ocultar_numeros, ocultar_etiquetas=ocultar_etiquetas, ocultar_funciones=ocultar_funciones, ocultar_cota=ocultar_cota)
+        fig = Draw_Sucesion_2D(n , intervalo_x, intervalo_y, ocultar_numeros=ocultar_numeros, ocultar_etiquetas=ocultar_etiquetas, ocultar_funciones=ocultar_funciones, ocultar_cota=ocultar_cota, tam_fuentes=tam_fuentes)
         st.pyplot(fig)
         st.markdown(f'Gráfico sucesión: {latex_tag_funcion}')
 
