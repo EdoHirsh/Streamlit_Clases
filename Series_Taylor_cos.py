@@ -14,7 +14,7 @@ def Taylor(x, n):
     return np.sum([((-1)**i * x**(2*i))/scp.special.factorial(2*i) for i in range(N+1)])
 
 #* Función para dibujar la función y su polinomio de Taylor
-def Draw_Taylor(n, intervalo_x=[-10.1,10.1], intervalo_y = [-2,2], intervalo_x_graf = [-10.1,10.1], intervalo_y_graf = [-2.1,2.1], tam_fuentes=12):
+def Draw_Taylor(n, intervalo_x=[-10.1,10.1], intervalo_x_graf = [-10.1,10.1], intervalo_y_graf = [-2.1,2.1], tam_fuentes=12):
     Res_EjeX=1000
     N_Max=n
 

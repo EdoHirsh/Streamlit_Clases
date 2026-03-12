@@ -1,5 +1,4 @@
 import numpy as np
-import scipy as scp
 import matplotlib.pyplot as plt
 import streamlit as st
 
