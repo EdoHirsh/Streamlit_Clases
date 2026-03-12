@@ -2,10 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit as st
 
-#* Etiquetas de las sucesiones en formato LaTeX para mostrar en el gráfico
-texto_sucesion_a = r'$a_n = \dfrac{(\cos(n))^2}{n^2}$'
-texto_sucesion_b = r'$b_n = \dfrac{1}{n^2}$'
-
 #* Función que define la sucesión a_n
 def func_a(x: float):
     return ((np.cos(x))**2)/(x**2)
@@ -103,19 +99,10 @@ def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numer
     #* tamaño de fuentes en los ejes
     ax.tick_params(axis='both', which='major', labelsize=tam_fuentes)
 
-    return fig
+    return fig , ax
 
 
 def main():
-    tam_fuentes=12
-
-    #* intervalos x e y
-    intervalo_x = [0,6]
-    intervalo_y = [0,1]
-
-    #* cantidad numero de elementos de la sucesion
-    n=6
-
     #! Configuración de la página de Streamlit
     st.set_page_config(page_title="Visualización criterio de comparación", layout="wide", initial_sidebar_state='expanded', page_icon=':material/line_axis:')
 
@@ -123,7 +110,7 @@ def main():
     st.title('Visualización criterio de comparación')
 
     #! Checkboxes para opciones de visualización
-    n = st.sidebar.number_input('indique el valor de $n$', min_value=1, value=n, step=1)
+    n = st.sidebar.number_input('indique el valor de $n$', min_value=1, value=6, step=1)
     ocultar_etiquetas = st.sidebar.toggle('Ocultar etiquetas sucesión', value=False)
     ocultar_numeros = st.sidebar.toggle('Ocultar etiquetas eje $x$', value=False)
     ocultar_a = st.sidebar.toggle('Ocultar sucesión $a_n$', value=False)
@@ -133,12 +120,12 @@ def main():
 
     #! Generar gráfico con spinner
     with st.spinner('Generando gráfico...'):
-        fig = Draw_Sucesion_2D(n , intervalo_x, intervalo_y, ocultar_numeros=ocultar_numeros, ocultar_etiquetas=ocultar_etiquetas, ocultar_a=ocultar_a, ocultar_b=ocultar_b, ocultar_sumas=ocultar_sumas, ocultar_funciones=ocultar_funciones, tam_fuentes=tam_fuentes)
+        fig , _ = Draw_Sucesion_2D(n , ocultar_numeros=ocultar_numeros, ocultar_etiquetas=ocultar_etiquetas, ocultar_a=ocultar_a, ocultar_b=ocultar_b, ocultar_sumas=ocultar_sumas, ocultar_funciones=ocultar_funciones)
         st.pyplot(fig)
         if not ocultar_a:
-            st.markdown(rf"{texto_sucesion_a}")
+            st.markdown(r'$a_n = \dfrac{(\cos(n))^2}{n^2}$')
         if not ocultar_b:
-            st.markdown(rf"{texto_sucesion_b}")
+            st.markdown(r'$b_n = \dfrac{1}{n^2}$')
 
 if __name__ == "__main__":
     main()

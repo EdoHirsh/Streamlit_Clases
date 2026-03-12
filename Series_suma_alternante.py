@@ -2,9 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit as st
 
-#* Etiqueta LaTeX de la serie
-latex_tag = r'$\displaystyle s_n=\sum_{k=1}^{n} \frac{(-1)^{k+1}}{k}$'
-
 #* Función que define a_n
 def func_a(x: int):
     return (-1)**(x+1)*(1/x)
@@ -16,7 +13,7 @@ def sum_a(x: int):
     suc =func_a(ind)
     return np.sum(suc)
 
-def Draw_Sucesion_1D(n , intervalo_x = [-0.05,1.05], intervalo_y = [-0.125,0.125], solo_ultimo = False, ocultar_etiquetas = False, tam_fuentes = 12):
+def Draw_Sucesion_1D(n , intervalo_x = [0.5,1], intervalo_y = [-0.125,0.125], solo_ultimo = False, ocultar_etiquetas = False, tam_fuentes = 12):
     indices_suc= np.arange(1,n+1)
 
     #! iniciar figura
@@ -62,14 +59,6 @@ def Draw_Sucesion_1D(n , intervalo_x = [-0.05,1.05], intervalo_y = [-0.125,0.125
 
 
 def main():
-    tam_fuentes=12
-
-    #* intervalos x e y
-    intervalo_x = [0.5,1]
-
-    #* cantidad numero de elementos de la sucesion
-    n=9
-
     #! Configuración de la página de Streamlit
     st.set_page_config(page_title='Ejemplo serie alternante', layout='wide', initial_sidebar_state='expanded', page_icon=':material/line_axis:')
 
@@ -77,7 +66,7 @@ def main():
     st.title('Ejemplo de serie alternante')
 
     #! Checkboxes para opciones de visualización
-    n = st.sidebar.number_input('indique el valor de $n$', min_value=2, value=n, step=1)
+    n = st.sidebar.number_input('indique el valor de $n$', min_value=2, value=9, step=1)
     ocultar_etiquetas = st.sidebar.toggle('Ocultar etiquetas sucesión', value=False)
     ocultar_valor_serie = st.sidebar.toggle('Ocultar valor de la serie', value=False)
 
@@ -86,11 +75,11 @@ def main():
     latex_suma_serie = r'$\displaystyle s=\sum_{k=1}^{\infty} \frac{(-1)^{k+1}}{k} = \ln(2) \approx 0,6931471806$'
     #! Generar gráfico con spinner
     with st.spinner('Generando gráfico...'):
-        ax, fig = Draw_Sucesion_1D(n , intervalo_x, solo_ultimo=False, ocultar_etiquetas=ocultar_etiquetas, tam_fuentes=tam_fuentes)
+        ax, fig = Draw_Sucesion_1D(n, solo_ultimo=False, ocultar_etiquetas=ocultar_etiquetas)
         if not ocultar_valor_serie:
             ax.scatter(np.log(2), 0, color='red', s=30)
         st.pyplot(fig)
-        st.markdown(f'{latex_tag}')
+        st.markdown(r'$\displaystyle s_n=\sum_{k=1}^{n} \frac{(-1)^{k+1}}{k}$')
         st.markdown(f'{latex_suma_total}')
         st.markdown(f'{latex_suma_serie}')
 

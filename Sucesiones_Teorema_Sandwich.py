@@ -2,11 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit as st
 
-#* Etiqueta de las sucesiones en formato LaTeX para mostrar en el gráfico
-latex_tag_funcion_a=r'$a_n = 1-\dfrac{1}{n}$'
-latex_tag_funcion_b=r'$b_n = 1+\dfrac{\sin(n)}{n}$'
-latex_tag_funcion_c=r'$c_n = 1+\dfrac{1}{n}$'
-
 #* Función que define la sucesión a representar
 def func_a(x: float):
     return 1-1/x
@@ -18,7 +13,7 @@ def func_c(x: float):
     return 1+1/x
 
 #* Función para dibujar la sucesión
-def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numeros = False, ocultar_etiquetas = False, ocultar_funciones = False, tam_fuentes = 12):
+def Draw_Sucesion_2D(n , intervalo_x = [0,10], intervalo_y = [0,2], ocultar_numeros = False, ocultar_etiquetas = False, ocultar_funciones = False, tam_fuentes = 12):
     indices_suc= np.arange(1,n+1)
     sucesion_a = func_a(indices_suc)
     sucesion_b = func_b(indices_suc)
@@ -48,9 +43,9 @@ def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numer
     ax.plot(0, 1, "^", transform=ax.get_xaxis_transform(), clip_on=False, color = 'black')
 
     #* Graficar las sucesiones
-    ax.scatter(indices_suc, sucesion_a, color='blue', s=10, label=latex_tag_funcion_a)
-    ax.scatter(indices_suc, sucesion_b, color='red', s=10, label=latex_tag_funcion_b)
-    ax.scatter(indices_suc, sucesion_c, color='green', s=10, label=latex_tag_funcion_c)
+    ax.scatter(indices_suc, sucesion_a, color='blue', s=10)
+    ax.scatter(indices_suc, sucesion_b, color='red', s=10)
+    ax.scatter(indices_suc, sucesion_c, color='green', s=10)
 
     #* Grafico de las funciones continuas
     if not ocultar_funciones:
@@ -77,19 +72,9 @@ def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numer
     #* tamaño de fuentes en los ejes
     ax.tick_params(axis='both', which='major', labelsize=tam_fuentes)
 
-    return fig
-
+    return fig , ax
 
 def main():
-    tam_fuentes=12
-
-    #* intervalos x e y
-    intervalo_x = [0,10]
-    intervalo_y = [0,2]
-
-    #* cantidad numero de elementos de la sucesion
-    n=10
-
     #! Configuración de la página de Streamlit
     st.set_page_config(page_title="Teorema del Sándwich para sucesiones", layout="wide", initial_sidebar_state='expanded', page_icon=':material/line_axis:')
 
@@ -97,18 +82,19 @@ def main():
     st.title('Teorema del Sándwich para sucesiones')
 
     #! Checkboxes para opciones de visualización
-    n = st.sidebar.number_input('indique el valor de $n$', min_value=1, value=n, step=1)
+    n = st.sidebar.number_input('indique el valor de $n$', min_value=1, value=10, step=1)
     ocultar_etiquetas = st.sidebar.toggle('Ocultar etiquetas sucesión', value=False)
     ocultar_numeros = st.sidebar.toggle('Ocultar etiquetas eje $x$', value=False)
-    ocultar_funciones = st.sidebar.toggle('Ocultar funciones continuas', value=True)
+    ocultar_funciones = st.sidebar.toggle('Ocultar funciones continuas', value=False)
 
     #! Generar gráfico con spinner
     with st.spinner('Generando gráfico...'):
-        fig = Draw_Sucesion_2D(n , intervalo_x, intervalo_y, ocultar_numeros=ocultar_numeros, ocultar_etiquetas=ocultar_etiquetas, ocultar_funciones=ocultar_funciones, tam_fuentes=tam_fuentes)
+        fig , _ = Draw_Sucesion_2D(n , ocultar_numeros=ocultar_numeros, ocultar_etiquetas=ocultar_etiquetas, ocultar_funciones=ocultar_funciones)
         st.pyplot(fig)
-        st.markdown(f'{latex_tag_funcion_a}')
-        st.markdown(f'{latex_tag_funcion_b}')
-        st.markdown(f'{latex_tag_funcion_c}')
+        #* Etiqueta de las sucesiones en formato LaTeX para mostrar en el gráfico
+        st.markdown(r'$a_n = 1-\dfrac{1}{n}$')
+        st.markdown(r'$b_n = 1+\dfrac{\sin(n)}{n}$')
+        st.markdown(r'$c_n = 1+\dfrac{1}{n}$')
 
 if __name__ == "__main__":
     main()

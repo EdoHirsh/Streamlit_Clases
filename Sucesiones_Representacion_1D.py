@@ -6,7 +6,7 @@ import streamlit as st
 def func_a(x: int):
     return ((-1)**x)*(1/x)
 
-def Draw_Sucesion_1D(n , intervalo_x = [0,1], intervalo_y = [-1,1],solo_ultimo = False, ocultar_etiquetas = False, tam_fuentes = 12):
+def Draw_Sucesion_1D(n , intervalo_x = [-1,1], intervalo_y = [-1,1],solo_ultimo = False, ocultar_etiquetas = False, tam_fuentes = 12):
     #* calcular valores de la sucesión
     indices_suc= np.arange(1,n+1)
     if solo_ultimo:
@@ -59,18 +59,10 @@ def Draw_Sucesion_1D(n , intervalo_x = [0,1], intervalo_y = [-1,1],solo_ultimo =
     #* tamaño de fuentes en los ejes
     ax.tick_params(axis='both', which='major', labelsize=tam_fuentes)
 
-    return fig
+    return fig , ax
 
 
 def main():
-    tam_fuentes=12
-
-    #* intervalo x
-    intervalo_x = [-1,1]
-
-    #* cantidad numero de elementos de la sucesion
-    n=6
-
     #! Configuración de la página de Streamlit
     st.set_page_config(page_title="Visualización 1D de una sucesión", layout="wide", initial_sidebar_state='expanded', page_icon=':material/line_axis:')
 
@@ -78,13 +70,13 @@ def main():
     st.title('Visualización 1D de una sucesión')
 
     #! Checkboxes para opciones de visualización
-    n = st.sidebar.number_input('indique el valor de $n$', min_value=1, value=n, step=1)
+    n = st.sidebar.number_input('indique el valor de $n$', min_value=1, value=6, step=1)
     ocultar_etiquetas = st.sidebar.toggle('Ocultar etiquetas sucesión', value=False)
     solo_ultimo = st.sidebar.toggle('Mostrar solo el término actual', value=False)
 
     #! Generar gráfico con spinner
     with st.spinner('Generando gráfico...'):
-        fig = Draw_Sucesion_1D(n , intervalo_x, solo_ultimo=solo_ultimo, ocultar_etiquetas=ocultar_etiquetas, tam_fuentes=tam_fuentes)
+        fig , _ = Draw_Sucesion_1D(n, solo_ultimo=solo_ultimo, ocultar_etiquetas=ocultar_etiquetas)
         st.pyplot(fig)
         st.markdown(f'Grafico sucesión $a_n = \\dfrac{{(-1)^{{n}}}}{{n}}$')
 

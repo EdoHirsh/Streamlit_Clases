@@ -5,7 +5,7 @@ import streamlit as st
 def func_f(x: float):
     return 1/x
 
-def Draw_Criterio(n ,N, PuntosSubintervalos, intervalo_x_vent = [-0.5,10.5], intervalo_y_vent = [-0.075,1.075], intervalo_x_graf = [0,10.5], SumaSuperior = True, SumaInferior = True, mostrar_funcion = True, Mostrar_integral = False, Tam_fuentes = 16):
+def Draw_Criterio(n ,N, PuntosSubintervalos, intervalo_x_vent = [-0.5,10.5], intervalo_y_vent = [-0.075,1.075], intervalo_x_graf = [0.01,10.5], SumaSuperior = True, SumaInferior = True, mostrar_funcion = True, Mostrar_integral = False, Tam_fuentes = 16):
     #! iniciar figura
     fig , ax = plt.subplots(figsize=(20,10))
     ax.set_xlim(*intervalo_x_vent)
@@ -50,17 +50,10 @@ def Draw_Criterio(n ,N, PuntosSubintervalos, intervalo_x_vent = [-0.5,10.5], int
             ax.fill_between([PuntosSubintervalos[i],PuntosSubintervalos[i+1]],[func_f(PuntosSubintervalos[i+1]),func_f(PuntosSubintervalos[i+1])],color='orange')
             ax.text(PuntosSubintervalos[i+1]-0.15,func_f(PuntosSubintervalos[i+1])-0.02,r'$a_{'+str(i+2)+'}$', fontsize=Tam_fuentes, color='brown', verticalalignment='center', horizontalalignment='center')
 
-    return fig
+    return fig , ax
 
 
 def main():
-    Tam_fuentes=16
-
-    #* intervalos x e y
-    intervalo_x_vent = [-0.5,10.5]
-    intervalo_y_vent = [-0.075,1.075]
-    intervalo_x_graf = [0.01,10.5]
-
     #* cantidad numero de elementos de la sucesion
     n=10
 
@@ -84,7 +77,7 @@ def main():
 
     #! Generar gráfico con spinner
     with st.spinner('Generando gráfico...'):
-        fig = Draw_Criterio(n ,N, PuntosSubintervalos, intervalo_x_vent, intervalo_y_vent,intervalo_x_graf, SumaSuperior, SumaInferior, mostrar_funcion, Mostrar_integral=Integral, Tam_fuentes=Tam_fuentes)
+        fig , _ = Draw_Criterio(n ,N, PuntosSubintervalos=PuntosSubintervalos, SumaSuperior=SumaSuperior, SumaInferior=SumaInferior, mostrar_funcion=mostrar_funcion, Mostrar_integral=Integral)
         st.pyplot(fig)
         st.markdown(r'$a_{n}=f(n)$')
 

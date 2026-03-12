@@ -2,15 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import streamlit as st
 
-#* Etiqueta de la sucesión en formato LaTeX para mostrar en el gráfico
-latex_tag_funcion=r'$a_n = 1-\dfrac{1}{n}$'
-
 #* Función que define la sucesión a representar
 def func_a(x: float):
     return 1-1/x
 
 #* Función para dibujar la sucesión
-def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numeros = False, ocultar_etiquetas = False, ocultar_funciones = False, ocultar_cota = False, tam_fuentes = 12):
+def Draw_Sucesion_2D(n , intervalo_x = [0,10], intervalo_y = [0,1], ocultar_numeros = False, ocultar_etiquetas = False, ocultar_funciones = False, ocultar_cota = False, tam_fuentes = 12):
     indices_suc= np.arange(1,n+1)
     sucesion = func_a(indices_suc)
     min_suc = np.min(sucesion)
@@ -65,19 +62,10 @@ def Draw_Sucesion_2D(n , intervalo_x = [0,6], intervalo_y = [0,1], ocultar_numer
     #* tamaño de fuentes en los ejes
     ax.tick_params(axis='both', which='major', labelsize=tam_fuentes)
 
-    return fig
+    return fig , ax
 
 
 def main():
-    tam_fuentes=12
-
-    #* intervalos x e y
-    intervalo_x = [0,10]
-    intervalo_y = [0,1]
-
-    #* cantidad numero de elementos de la sucesion
-    n=10
-
     #! Configuración de la página de Streamlit
     st.set_page_config(page_title="Sucesión Monótona Acotada", layout="wide", initial_sidebar_state='expanded', page_icon=':material/line_axis:')
 
@@ -85,17 +73,17 @@ def main():
     st.title('Sucesión Monótona Acotada')
 
     #! Checkboxes para opciones de visualización
-    n = st.sidebar.number_input('indique el valor de $n$', min_value=1, value=n, step=1)
+    n = st.sidebar.number_input('indique el valor de $n$', min_value=1, value=10, step=1)
     ocultar_etiquetas = st.sidebar.toggle('Ocultar etiquetas sucesión', value=False)
     ocultar_numeros = st.sidebar.toggle('Ocultar etiquetas eje $x$', value=False)
     ocultar_funciones = st.sidebar.toggle('Ocultar funciones continuas', value=False)
-    ocultar_cota = st.sidebar.toggle('Ocultar cota', value=True)
+    ocultar_cota = st.sidebar.toggle('Ocultar cota', value=False)
 
     #! Generar gráfico con spinner
     with st.spinner('Generando gráfico...'):
-        fig = Draw_Sucesion_2D(n , intervalo_x, intervalo_y, ocultar_numeros=ocultar_numeros, ocultar_etiquetas=ocultar_etiquetas, ocultar_funciones=ocultar_funciones, ocultar_cota=ocultar_cota, tam_fuentes=tam_fuentes)
+        fig , _ = Draw_Sucesion_2D(n, ocultar_numeros=ocultar_numeros, ocultar_etiquetas=ocultar_etiquetas, ocultar_funciones=ocultar_funciones, ocultar_cota=ocultar_cota)
         st.pyplot(fig)
-        st.markdown(f'Gráfico sucesión: {latex_tag_funcion}')
+        st.markdown(r'Gráfico sucesión: $\ a_n = 1-\dfrac{1}{n}$')
 
 if __name__ == "__main__":
     main()
