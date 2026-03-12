@@ -58,7 +58,7 @@ def Draw_Sucesion_1D(n , intervalo_x = [-0.05,1.05], intervalo_y = [-0.125,0.125
     #* tamaño de fuentes en los ejes
     ax.tick_params(axis='both', which='major', labelsize=tam_fuentes)
 
-    return fig
+    return ax , fig
 
 
 def main():
@@ -79,13 +79,16 @@ def main():
     #! Checkboxes para opciones de visualización
     n = st.sidebar.number_input('indique el valor de $n$', min_value=2, value=n, step=1)
     ocultar_etiquetas = st.sidebar.toggle('Ocultar etiquetas sucesión', value=False)
+    ocultar_valor_serie = st.sidebar.toggle('Ocultar valor de la serie', value=False)
 
     Suma_total = sum_a(n)
-    latex_suma_total = rf'$\displaystyle s_{{{n}}}={Suma_total}, \quad b_{{{n}}}={func_a(n)}, \quad R_n = {Suma_total - np.log(2)}$'
-    latex_suma_serie = r'$\displaystyle s_n=\sum_{k=1}^{\infty} \frac{(-1)^{k+1}}{k} = \ln(2) \approx 0,6931471806$'
+    latex_suma_total = rf'$\displaystyle s_{{{n}}}={Suma_total}, \quad b_{{{n}}}={np.abs(func_a(n))}, \quad R_n = {Suma_total - np.log(2)}$'
+    latex_suma_serie = r'$\displaystyle s=\sum_{k=1}^{\infty} \frac{(-1)^{k+1}}{k} = \ln(2) \approx 0,6931471806$'
     #! Generar gráfico con spinner
     with st.spinner('Generando gráfico...'):
-        fig = Draw_Sucesion_1D(n , intervalo_x, solo_ultimo=False, ocultar_etiquetas=ocultar_etiquetas, tam_fuentes=tam_fuentes)
+        ax, fig = Draw_Sucesion_1D(n , intervalo_x, solo_ultimo=False, ocultar_etiquetas=ocultar_etiquetas, tam_fuentes=tam_fuentes)
+        if not ocultar_valor_serie:
+            ax.scatter(np.log(2), 0, color='red', s=30)
         st.pyplot(fig)
         st.markdown(f'{latex_tag}')
         st.markdown(f'{latex_suma_total}')

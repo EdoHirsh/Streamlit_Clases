@@ -77,10 +77,10 @@ def main():
     st.title('Visualización criterio de la integral')
 
     #! Checkboxes para opciones de visualización
-    mostrar_funcion = st.sidebar.checkbox('Mostrar función', value=True)
-    SumaSuperior = st.sidebar.checkbox(r'Mostrar $\{a_{n}\}_{n=1}^{9}$', value=True)
-    SumaInferior = st.sidebar.checkbox(r'Mostrar $\{a_{n}\}_{n=2}^{10}$', value=True)
-    Integral = st.sidebar.checkbox('Mostrar integral', value=False)
+    mostrar_funcion = st.sidebar.toggle('Mostrar función', value=True)
+    SumaSuperior = st.sidebar.toggle(r'Mostrar $\{a_{n}\}_{n=1}^{9}$', value=True)
+    SumaInferior = st.sidebar.toggle(r'Mostrar $\{a_{n}\}_{n=2}^{10}$', value=True)
+    Integral = st.sidebar.toggle('Mostrar integral', value=False)
 
     #! Generar gráfico con spinner
     with st.spinner('Generando gráfico...'):
